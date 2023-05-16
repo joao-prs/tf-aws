@@ -8,21 +8,23 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 4.0"
-  region  = "sa-east-1"
+  region     = "sa-east-1"
+  access_key = "you_access_key"
+  secret_key = "you_secret_key"
+}
 
-  assume_role_with_web_identity {
-    role_arn                = "arn:aws:iam::734458512353:user/Jteste"
-    session_name            = "SESSION_NAME"
-    web_identity_token_file = "/home/jpedro/Documentos/swa/Jteste_accessKeys.csv"
+resource "aws_s3_bucket" "bucket-01" {
+  bucket = "balde-s3-websites"
+  tags = {
+    Name        = "bucket para websites"
+    Environment = "infra"
   }
 }
 
-resource "aws_s3_bucket" "example-bucket" {
-  bucket = "my-tf-test-bucket"
-
+resource "aws_s3_bucket" "bucket-02" {
+  bucket = "balde-s3-imagens"
   tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+    Name        = "bucket para imagens"
+    Environment = "infra"
   }
 }
